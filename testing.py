@@ -6,7 +6,7 @@ if os.path.exists("env.py"):
     import env
 
 # Call the proxy
-test_proxy = Proxy("robknowles", os.environ.get("password"), os.environ.get("API_key"))
+test_proxy = Proxy("robknowles", os.environ.get("password"), os.environ.get("API_key"), os.environ.get("API_url"))
 
 # Testing the init method
 test_token = test_proxy.token

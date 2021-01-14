@@ -5,13 +5,14 @@ import os
 
 class Proxy():
 
-    def __init__(self, userName, password, API_key):
+    def __init__(self, userName, password, API_key, url):
         """
         Method that creates a class variable of token which gives the oAuth token
         """
+        self.url = url
         signin_data = {"password": password, "userName": userName}
         try:
-            signin_request = requests.post("https://api.lvs.linius.com/v3/iam/auth/signin", json=signin_data)
+            signin_request = requests.post(f"{self.url}/v3/iam/auth/signin", json=signin_data)
             self.token = signin_request.json()["token"]
         except KeyError:
             raise ValueError("Username or password incorrect!")
@@ -53,7 +54,7 @@ class Proxy():
         for key, val in optional_args.items():
             if val:
                 request_body[key] = val
-        discover_request = requests.post("https://api.lvs.linius.com/v3/discover", headers=self.headers, json=request_body)
+        discover_request = requests.post(f"{self.url}/v3/discover", headers=self.headers, json=request_body)
         return discover_request.json()
 
 
@@ -68,7 +69,7 @@ class Proxy():
             "assetId": assetId,
             "workflowId": workflowId
         }
-        enrich_assets_request = requests.post("https://api.lvs.linius.com/v3/enrich/assets", headers=self.headers, json=request_body)
+        enrich_assets_request = requests.post(f"{self.url}/v3/enrich/assets", headers=self.headers, json=request_body)
         return enrich_assets_request.json()
 
 
@@ -78,7 +79,7 @@ class Proxy():
 
         :id: Array, Multiple assetIds of discovered Assets
         """
-        enrich_jobs_request = requests.get("https://api.lvs.linius.com/v3/enrich/jobs", params={"id": assetIds}, headers=self.headers)
+        enrich_jobs_request = requests.get(f"{self.url}/v3/enrich/jobs", params={"id": assetIds}, headers=self.headers)
         return enrich_jobs_request.json()
 
 
@@ -94,5 +95,5 @@ class Proxy():
             if val:
                 request_body[key] = val
 
-        search_request = requests.get("https://api.lvs.linius.com/v3/search", params=request_body, headers=self.headers)
+        search_request = requests.get(f"{self.url}/v3/search", params=request_body, headers=self.headers)
         return search_request.json()
