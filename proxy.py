@@ -73,3 +73,13 @@ class Proxy():
         }
         enrich_assets_request = requests.post("https://api.lvs.linius.com/v3/enrich/assets", headers=self.headers, json=request_body)
         return enrich_assets_request.json()
+
+
+    def enrich_jobs(self, assetIds):
+        """
+        Method that allows you to get the statuses of multiple Enrichment jobs by providing multiple assetIds.
+
+        :id: Array, Multiple assetIds of discovered Assets
+        """
+        enrich_jobs_request = requests.get("https://api.lvs.linius.com/v3/enrich/jobs", params={"id": assetIds}, headers=self.headers)
+        return enrich_jobs_request.json()
