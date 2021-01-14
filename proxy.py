@@ -10,8 +10,11 @@ class Proxy():
         Method that creates a class variable of token which gives the oAuth token
         """
         signin_data = {"password": password, "userName": userName}
-        signin_request = requests.post("https://api.lvs.linius.com/v3/iam/auth/signin", json=signin_data)
-        self.token = signin_request.json()["token"]
+        try:
+            signin_request = requests.post("https://api.lvs.linius.com/v3/iam/auth/signin", json=signin_data)
+            self.token = signin_request.json()["token"]
+        except KeyError:
+            raise ValueError("Username or password incorrect!")
         self.API_key = API_key
         self.headers = {"authorization": "Bearer " + self.token, "x-api-key": self.API_key}
 
