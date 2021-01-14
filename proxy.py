@@ -36,4 +36,11 @@ class Proxy():
         :tags: list, list of tags for the media asset
         :uploadSource: boolean, decides if the media will be uploaded or just the headers will be stored
         """
-        return 
+        request_body = {
+            "name": name,
+            "sourceUrl": sourceUrl,
+            "tags": tags,
+            "uploadSource": uploadSource
+        }
+        discover_request = requests.post("https://api.lvs.linius.com/v2/discover", headers=self.headers, json=request_body)
+        return discover_request.json()
