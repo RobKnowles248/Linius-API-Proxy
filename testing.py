@@ -19,4 +19,7 @@ robs_proxy = Proxy("robknowles", os.environ.get("password"), os.environ.get("API
 # print(robs_proxy.enrich_assets("624311", 2))
 
 # Testing enrich jobs method
-print(robs_proxy.enrich_jobs(["624311"]))
+# print(robs_proxy.enrich_jobs(["624311"]))
+
+# Testing search method
+print(robs_proxy.search("tears"))
