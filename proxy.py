@@ -58,3 +58,18 @@ class Proxy():
             request_body["thumbnailUrl"] = thumbnailUrl
         discover_request = requests.post("https://api.lvs.linius.com/v3/discover", headers=self.headers, json=request_body)
         return discover_request.json()
+
+
+    def enrich_assets(self, assetId, workflowId=2):
+        """
+        Method that will enrich a discovered asset
+
+        :assetId: String, Valid ID of Discovered Asset
+        :workflowId: Int32, Indicates the specific data provider and clip metadata schema. Standard workflow ID is 2.
+        """
+        request_body = {
+            "assetId": assetId,
+            "workflowId": workflowId
+        }
+        enrich_assets_request = requests.post("https://api.lvs.linius.com/v3/enrich/assets", headers=self.headers, json=request_body)
+        return enrich_assets_request.json()
