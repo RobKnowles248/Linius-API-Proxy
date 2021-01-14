@@ -4,7 +4,12 @@ import os
 if os.path.exists("env.py"):
     import env
 
-signin_data = {"password": os.environ.get("password"),"userName": "robknowles"}
-signin_request = requests.post("https://api.lvs.linius.com/v2/iam/auth/signin", json=signin_data)
-print(signin_request.content)
+def signin(userName, password):
+    """
+    Function that signs into the Linius API and returns an oAuth code.
+    """
+    signin_data = {"password": password, "userName": userName}
+    signin_request = requests.post("https://api.lvs.linius.com/v2/iam/auth/signin", json=signin_data)
+    return signin_request.json()["token"]
 
+print(signin("robknowles", os.environ.get("password")))
