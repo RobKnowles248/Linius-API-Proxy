@@ -13,7 +13,8 @@ class Proxy():
         signin_request = requests.post("https://api.lvs.linius.com/v2/iam/auth/signin", json=signin_data)
         self.token = signin_request.json()["token"]
         self.API_key = API_key
-        
+        self.headers = {"authorization": "Bearer " + self.token, "x-api-key": self.API_key}
+
 
     def validateToken(self):
         """
@@ -35,4 +36,4 @@ class Proxy():
         :tags: list, list of tags for the media asset
         :uploadSource: boolean, decides if the media will be uploaded or just the headers will be stored
         """
-        return
+        return 
