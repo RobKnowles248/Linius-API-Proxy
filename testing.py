@@ -16,4 +16,7 @@ robs_proxy = Proxy("robknowles", os.environ.get("password"), os.environ.get("API
 # print(robs_proxy.discover("https://linius-lvs.s3.amazonaws.com/demo/tears-of-steel.mp4"))
 
 # Testing enrich assets method
-print(robs_proxy.enrich_assets("624311", 2))
+# print(robs_proxy.enrich_assets("624311", 2))
+
+# Testing enrich jobs method
+print(robs_proxy.enrich_jobs(["624311"]))
