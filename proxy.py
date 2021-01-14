@@ -46,16 +46,10 @@ class Proxy():
             "sourceUrl": sourceUrl,
 
         }
-        if endDate:
-            request_body["endDate"] = endDate
-        if mediaFormat:
-            request_body["format"] = mediaFormat
-        if name:
-            request_body["name"] = name
-        if tags:
-            request_body["tags"] = tags
-        if thumbnailUrl:
-            request_body["thumbnailUrl"] = thumbnailUrl
+        optional_args = {"endDate": endDate, "media": mediaFormat, "name": name, "tags": tags, "thumbnailUrl": thumbnailUrl}
+        for key, val in optional_args.items():
+            if val:
+                request_body[key] = val
         discover_request = requests.post("https://api.lvs.linius.com/v3/discover", headers=self.headers, json=request_body)
         return discover_request.json()
 
@@ -83,3 +77,19 @@ class Proxy():
         """
         enrich_jobs_request = requests.get("https://api.lvs.linius.com/v3/enrich/jobs", params={"id": assetIds}, headers=self.headers)
         return enrich_jobs_request.json()
+
+
+    def search(self, query, page=None, pageSize=None, sortMode=None, sortDesc=None, addHighlights=None):
+        """
+        Method that searches for videoclip objects within one or multiple discovered video assets
+        """
+        request_body = {
+            "query": query
+        }
+        optional_args = {"page": page, "pageSize": pageSize, "sortMode": sortMode, "sortDesc": sortDesc, "addHighlights": addHighlights}
+        for key, val in optional_args.items():
+            if val:
+                request_body[key] = val
+
+        search_request = requests.get("https://api.lvs.linius.com/v3/search", params=request_body, headers=self.headers)
+        return search_request.json()
