@@ -12,4 +12,17 @@ def signin(userName, password):
     signin_request = requests.post("https://api.lvs.linius.com/v2/iam/auth/signin", json=signin_data)
     return signin_request.json()["token"]
 
-print(signin("robknowles", os.environ.get("password")))
+my_token = signin("robknowles", os.environ.get("password"))
+
+def validateToken(token):
+    """
+    Function that validates an oAuth token for the Linius API
+    """
+    headers = {"authorization": "Bearer " + token}
+    validate_request = requests.get("https://api.lvs.linius.com/v2/iam/auth/token/validate", headers=headers)
+    if validate_request.status_code == 200:
+        return "Valid"
+    elif validate_request.status_code == 401:
+        return "Invalid"
+
+print(validateToken(my_token))
