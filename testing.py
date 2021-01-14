@@ -9,8 +9,8 @@ if os.path.exists("env.py"):
 robs_proxy = Proxy("robknowles", os.environ.get("password"), os.environ.get("API_key"))
 
 # Testing the init method
-#print(robs_proxy.token)
-#print(robs_proxy.headers)
+print(robs_proxy.token)
+print(robs_proxy.headers)
 
 # Testing discover method
 print(robs_proxy.discover(
