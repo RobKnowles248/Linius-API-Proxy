@@ -13,9 +13,4 @@ print(robs_proxy.token)
 print(robs_proxy.headers)
 
 # Testing discover method
-print(robs_proxy.discover(
-    "Tears of Steel",
-    "https://linius-lvs.s3.amazonaws.com/demo/tears-of-steel.mp4",
-    ["Tears of Steel", "Demo5"],
-    "http://www.gstatic.com/tv/thumb/movieposters/10875273/p10875273_p_v8_ac.jpg",
-    False))
+print(robs_proxy.discover("https://linius-lvs.s3.amazonaws.com/demo/tears-of-steel.mp4"))

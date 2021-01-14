@@ -28,19 +28,33 @@ class Proxy():
             return "Invalid"
 
 
-    def discover(self, name, sourceUrl, tags, thumbnailUrl, uploadSource):
+    def discover(self, sourceUrl, endDate=None, mediaFormat=None, name=None, startDate=None, tags=None, thumbnailUrl=None):
         """
         Method that will discover and process Audio/Video assets and save relevant info in the Linius platform
-        :name: string, name of the media asset
+
         :sourceUrl: string, source URL of the media asset
-        :tags: list, list of tags for the media asset
-        :uploadSource: boolean, decides if the media will be uploaded or just the headers will be stored
+        :endDate: Date-time, End date of activation, can be absent
+        :format: String, source format, default: MP4
+        :name: string, name for discovered asset, generated if absent
+        :startDate: Date-time, Start date of activation, can be absent
+        :tags: list, Asset tags, Set of 0 or more tags each as individual strings
+        :thumbnailUrl: URL of video thumbnail
+
+        :returns: response object for the API call
         """
         request_body = {
-            "name": name,
             "sourceUrl": sourceUrl,
-            "tags": tags,
-            "uploadSource": uploadSource
+
         }
+        if endDate:
+            request_body["endDate"] = endDate
+        if mediaFormat:
+            request_body["format"] = mediaFormat
+        if name:
+            request_body["name"] = name
+        if tags:
+            request_body["tags"] = tags
+        if thumbnailUrl:
+            request_body["thumbnailUrl"] = thumbnailUrl
         discover_request = requests.post("https://api.lvs.linius.com/v3/discover", headers=self.headers, json=request_body)
         return discover_request.json()
