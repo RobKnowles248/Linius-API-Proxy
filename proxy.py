@@ -25,7 +25,7 @@ class Proxy():
         Method that validates an oAuth token for the Linius API
         """
         headers = {"authorization": "Bearer " + self.token}
-        validate_request = requests.get("https://api.lvs.linius.com/v3/iam/auth/token/validate", headers=headers)
+        validate_request = requests.get(f"{self.url}/v3/iam/auth/token/validate", headers=headers)
         if validate_request.status_code == 200:
             return "Valid"
         elif validate_request.status_code == 401:
